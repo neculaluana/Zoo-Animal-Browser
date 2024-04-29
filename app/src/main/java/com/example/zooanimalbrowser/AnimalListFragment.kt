@@ -14,6 +14,8 @@ class AnimalListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private val animals: MutableList<Animal> = mutableListOf(
+        Animal("Tanuki", "Asia"),
+        Animal("Koala", "Australia"),
         Animal("Lion", "Africa"),
         Animal("Elephant", "Africa"),
         Animal("Rhinoceros", "Africa"),
@@ -24,7 +26,6 @@ class AnimalListFragment : Fragment() {
         Animal("Hippopotamus", "Africa"),
         Animal("Chimpanzee", "Africa"),
         Animal("Gorilla", "Africa"),
-        Animal("Koala", "Australia"),
         Animal("Kangaroo", "Australia"),
         Animal("Echidna", "Australia"),
         Animal("Wombat", "Australia"),
@@ -69,8 +70,7 @@ class AnimalListFragment : Fragment() {
         Animal("Wolf", "Europe"),
         Animal("Golden Eagle", "Europe"),
         Animal("Red Panda", "Asia"),
-        Animal("Gaur", "Asia"),
-        Animal("Tanuki", "Asia")
+        Animal("Gaur", "Asia")
     )
 
 
