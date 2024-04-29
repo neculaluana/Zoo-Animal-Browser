@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.zooanimalbrowser.R
 import com.example.zooanimalbrowser.models.Animal
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 
 class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder>() {
 
@@ -33,7 +34,6 @@ class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<An
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
         val animal = animals[position]
-
         val nameTextView = holder.view.findViewById<TextView>(R.id.name)
         val continentTextView = holder.view.findViewById<TextView>(R.id.continent)
 
@@ -41,51 +41,62 @@ class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<An
         continentTextView.text = animal.continent
 
         val separator = holder.view.findViewById<View>(R.id.separator)
+
+        val backgroundDrawable = holder.view.context.resources.getDrawable(R.drawable.rectangle_oval_shape, null).mutate() as GradientDrawable
+
+        val color = when (animal.continent) {
+            "Europe" -> Color.GREEN
+            "Africa" -> Color.YELLOW
+            "Asia" -> Color.RED
+            "North America" -> Color.parseColor("#8B4513") // Maroon
+            "South America" -> Color.parseColor("#FF7518") // Orange
+            "Australia" -> Color.parseColor("#800080") // Purple
+            "Antarctica" -> Color.BLUE
+            else -> Color.TRANSPARENT // Default color if continent not matched
+        }
+        backgroundDrawable.setColor(color)
+
+        holder.view.background = backgroundDrawable
+
         when (animal.continent) {
             "Europe" -> {
-                holder.view.setBackgroundColor(Color.GREEN)
                 nameTextView.gravity = Gravity.START
                 continentTextView.gravity = Gravity.BOTTOM
                 separator.visibility = View.GONE
             }
-            "Africa" -> {
-                holder.view.setBackgroundColor(Color.YELLOW)
+            "Africa"-> {
                 nameTextView.gravity = Gravity.START
                 continentTextView.gravity = Gravity.START
                 separator.visibility = View.VISIBLE
             }
             "Asia" -> {
-                holder.view.setBackgroundColor(Color.RED)
                 nameTextView.gravity = Gravity.CENTER_HORIZONTAL
                 continentTextView.gravity = Gravity.CENTER_HORIZONTAL
                 separator.visibility = View.VISIBLE
             }
+            "Antarctica" -> {
+                nameTextView.gravity = Gravity.CENTER_HORIZONTAL
+                continentTextView.gravity = Gravity.CENTER_HORIZONTAL
+                separator.visibility = View.VISIBLE
+            }
+            "Australia" -> {
+                nameTextView.gravity = Gravity.CENTER_HORIZONTAL
+                continentTextView.gravity = Gravity.CENTER_HORIZONTAL
+                separator.visibility = View.GONE
+            }
             "North America" -> {
-                holder.view.setBackgroundColor(Color.parseColor("#8B4513")) // maro
                 nameTextView.gravity = Gravity.END
                 continentTextView.gravity = Gravity.END
                 separator.visibility = View.GONE
             }
             "South America" -> {
-                holder.view.setBackgroundColor(Color.parseColor("#FF7518")) // portocaliu
                 nameTextView.gravity = Gravity.END
                 continentTextView.gravity = Gravity.END
                 separator.visibility = View.VISIBLE
             }
-            "Australia" -> {
-                holder.view.setBackgroundColor(Color.parseColor("#800080")) // mov
-                nameTextView.gravity = Gravity.CENTER_HORIZONTAL
-                continentTextView.gravity = Gravity.CENTER_HORIZONTAL
-                separator.visibility = View.GONE
-            }
-            "Antarctica" -> {
-                holder.view.setBackgroundColor(Color.BLUE)
-                nameTextView.gravity = Gravity.CENTER_HORIZONTAL
-                continentTextView.gravity = Gravity.CENTER_HORIZONTAL
-                separator.visibility = View.VISIBLE
-            }
         }
     }
+
 
 
     override fun getItemCount() = animals.size
