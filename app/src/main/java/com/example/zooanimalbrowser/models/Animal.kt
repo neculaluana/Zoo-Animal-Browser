@@ -1,4 +1,6 @@
 package com.example.zooanimalbrowser.models
 
-class Animal {
-}
+data class Animal(
+    val name: String,
+    val continent: String
+)
