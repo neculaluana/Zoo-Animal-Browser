@@ -10,4 +10,10 @@
         android:text="@string/close_app"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"/>
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/closeAppButton" />
 </RelativeLayout>

@@ -22,14 +22,12 @@ class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<An
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
         val animal = animals[position]
 
-        // Set the name and continent of the animal
         val nameTextView = holder.view.findViewById<TextView>(R.id.name)
         val continentTextView = holder.view.findViewById<TextView>(R.id.continent)
 
         nameTextView.text = animal.name
         continentTextView.text = animal.continent
 
-        // Set the background color and text alignment based on the continent
         val separator = holder.view.findViewById<View>(R.id.separator)
         when (animal.continent) {
             "Europa" -> {

@@ -13,5 +13,10 @@ class MainActivity : AppCompatActivity() {
         closeAppButton.setOnClickListener {
             finish()
         }
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, AnimalListFragment())
+                .commit()
+        }
     }
 }
