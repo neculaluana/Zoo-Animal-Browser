@@ -30,10 +30,10 @@ class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<An
 
         val separator = holder.view.findViewById<View>(R.id.separator)
         when (animal.continent) {
-            "Europa" -> {
+            "Europe" -> {
                 holder.view.setBackgroundColor(Color.GREEN)
                 nameTextView.gravity = Gravity.START
-                continentTextView.gravity = Gravity.START
+                continentTextView.gravity = Gravity.BOTTOM
                 separator.visibility = View.GONE
             }
             "Africa" -> {
@@ -48,14 +48,14 @@ class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<An
                 continentTextView.gravity = Gravity.CENTER_HORIZONTAL
                 separator.visibility = View.VISIBLE
             }
-            "America de Nord" -> {
+            "North America" -> {
                 holder.view.setBackgroundColor(Color.parseColor("#8B4513")) // maro
                 nameTextView.gravity = Gravity.END
                 continentTextView.gravity = Gravity.END
                 separator.visibility = View.GONE
             }
-            "America de Sud" -> {
-                holder.view.setBackgroundColor(Color.parseColor("#FFA500")) // portocaliu
+            "South America" -> {
+                holder.view.setBackgroundColor(Color.parseColor("#FF7518")) // portocaliu
                 nameTextView.gravity = Gravity.END
                 continentTextView.gravity = Gravity.END
                 separator.visibility = View.VISIBLE
