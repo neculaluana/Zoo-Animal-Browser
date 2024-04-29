@@ -15,8 +15,20 @@ class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<An
     class AnimalViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.animal_item, parent, false)
+        val view = if (viewType == 0) {
+            LayoutInflater.from(parent.context).inflate(R.layout.animal_item_vertical, parent, false)
+        } else {
+            LayoutInflater.from(parent.context).inflate(R.layout.animal_item_horizontal, parent, false)
+        }
         return AnimalViewHolder(view)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (animals[position].continent == "Asia") {
+            1 // horizontal
+        } else {
+            0 // vertical
+        }
     }
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
