@@ -13,10 +13,29 @@ class MainActivity : AppCompatActivity() {
         closeAppButton.setOnClickListener {
             finish()
         }
+        val homeButton: Button = findViewById(R.id.homeButton)
+        homeButton.setOnClickListener {
+            if (!returnHome()) {
+                // If not in stack, replace with a new instance
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, AnimalListFragment())
+                    .commit()
+            }
+        }
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, AnimalListFragment())
                 .commit()
         }
+    }
+    private fun returnHome(): Boolean {
+        for (i in 0 until supportFragmentManager.backStackEntryCount) {
+            val entry = supportFragmentManager.getBackStackEntryAt(i)
+            if (entry.name == "AnimalListFragment") {
+                supportFragmentManager.popBackStackImmediate("AnimalListFragment", 0)
+                return true
+            }
+        }
+        return false
     }
 }
