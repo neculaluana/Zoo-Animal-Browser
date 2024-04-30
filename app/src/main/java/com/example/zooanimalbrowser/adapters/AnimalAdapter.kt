@@ -11,10 +11,21 @@ import com.example.zooanimalbrowser.models.Animal
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 
-class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder>() {
+class AnimalAdapter(
+    private val animals: List<Animal>,
+    private val itemClickListener: OnItemClickListener
+) : RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder>() {
 
-    class AnimalViewHolder(val view: View) : RecyclerView.ViewHolder(view)
-
+    interface OnItemClickListener {
+        fun onItemClick(animal: Animal, bgcolor: Int, textColor: Int)
+    }
+    class AnimalViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(animal: Animal, clickListener: OnItemClickListener, bgcolor: Int, textColor: Int) {
+            view.setOnClickListener {
+                clickListener.onItemClick(animal, bgcolor, textColor)
+            }
+        }
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val view = if (viewType == 0) {
             LayoutInflater.from(parent.context).inflate(R.layout.animal_item_vertical, parent, false)
@@ -44,7 +55,7 @@ class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<An
 
         val backgroundDrawable = holder.view.context.resources.getDrawable(R.drawable.rectangle_oval_shape, null).mutate() as GradientDrawable
 
-        val color = when (animal.continent) {
+        val bgColor = when (animal.continent) {
             "Europe" -> Color.parseColor("#355E3B") //verde
             "Africa" -> Color.parseColor("#FADA5E") //galben
             "Asia" -> Color.parseColor("#D2042D") //rosu
@@ -54,7 +65,7 @@ class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<An
             "Antarctica" -> Color.parseColor("#6495ED") //albastru
             else -> Color.TRANSPARENT // default
         }
-        backgroundDrawable.setColor(color)
+        backgroundDrawable.setColor(bgColor)
 
         holder.view.background = backgroundDrawable
 
@@ -65,7 +76,7 @@ class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<An
         }
         nameTextView.setTextColor(textColor)
         continentTextView.setTextColor(textColor)
-
+        holder.bind(animal, itemClickListener, bgColor, textColor)
         when (animal.continent) {
             "Europe" -> {
                 nameTextView.gravity = Gravity.START

@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zooanimalbrowser.adapters.AnimalAdapter
+import com.example.zooanimalbrowser.adapters.AnimalAdapter.OnItemClickListener
 import com.example.zooanimalbrowser.models.Animal
 
-class AnimalListFragment : Fragment() {
+class AnimalListFragment : Fragment(), OnItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private val animals: MutableList<Animal> = mutableListOf(
@@ -82,11 +84,24 @@ class AnimalListFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.animalList)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = AnimalAdapter(getAnimals())
+        recyclerView.adapter = AnimalAdapter(getAnimals(),this)
 
         return view
     }
-
+    override fun onItemClick(animal: Animal, bgColor: Int, textColor: Int) {
+        val detailFragment = AnimalDetailFragment().apply {
+            arguments = Bundle().apply {
+                putString("name", animal.name)
+                putString("continent", animal.continent)
+                putInt("bgColor", bgColor)
+                putInt("textColor", textColor)
+            }
+        }
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.fragmentContainer, detailFragment)
+            ?.addToBackStack(null)
+            ?.commit()
+    }
     private fun getAnimals(): List<Animal> {
         return animals
     }
