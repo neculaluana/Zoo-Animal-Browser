@@ -45,18 +45,26 @@ class AnimalAdapter(private val animals: List<Animal>) : RecyclerView.Adapter<An
         val backgroundDrawable = holder.view.context.resources.getDrawable(R.drawable.rectangle_oval_shape, null).mutate() as GradientDrawable
 
         val color = when (animal.continent) {
-            "Europe" -> Color.GREEN
-            "Africa" -> Color.YELLOW
-            "Asia" -> Color.RED
-            "North America" -> Color.parseColor("#8B4513") // Maroon
-            "South America" -> Color.parseColor("#FF7518") // Orange
-            "Australia" -> Color.parseColor("#800080") // Purple
-            "Antarctica" -> Color.BLUE
-            else -> Color.TRANSPARENT // Default color if continent not matched
+            "Europe" -> Color.parseColor("#355E3B") //verde
+            "Africa" -> Color.parseColor("#FADA5E") //galben
+            "Asia" -> Color.parseColor("#D2042D") //rosu
+            "North America" -> Color.parseColor("#8B4513") // maro
+            "South America" -> Color.parseColor("#FF7518") // portocaliu
+            "Australia" -> Color.parseColor("#800080") // mov
+            "Antarctica" -> Color.parseColor("#6495ED") //albastru
+            else -> Color.TRANSPARENT // default
         }
         backgroundDrawable.setColor(color)
 
         holder.view.background = backgroundDrawable
+
+        val textColor = when (animal.continent) {
+            "Europe", "Australia", "Asia", "North America", "Antarctica" -> Color.WHITE
+            "South America", "Africa" -> Color.BLACK
+            else -> Color.BLACK
+        }
+        nameTextView.setTextColor(textColor)
+        continentTextView.setTextColor(textColor)
 
         when (animal.continent) {
             "Europe" -> {
