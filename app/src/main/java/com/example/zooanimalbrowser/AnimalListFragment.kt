@@ -89,19 +89,27 @@ class AnimalListFragment : Fragment(), OnItemClickListener {
         return view
     }
     override fun onItemClick(animal: Animal, bgColor: Int, textColor: Int) {
-        val detailFragment = AnimalDetailFragment().apply {
-            arguments = Bundle().apply {
-                putString("name", animal.name)
-                putString("continent", animal.continent)
-                putInt("bgColor", bgColor)
-                putInt("textColor", textColor)
+        val fragmentManager = activity?.supportFragmentManager
+        var detailFragment = fragmentManager?.findFragmentById(R.id.fragmentContainer) as? AnimalDetailFragment
+
+        if (detailFragment == null) {
+            detailFragment = AnimalDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putString("name", animal.name)
+                    putString("continent", animal.continent)
+                    putInt("bgColor", bgColor)
+                    putInt("textColor", textColor)
+                }
             }
+            fragmentManager?.beginTransaction()
+                ?.replace(R.id.fragmentContainer, detailFragment)
+                ?.addToBackStack(null)
+                ?.commit()
+        } else {
+            detailFragment.updateContent(animal, bgColor, textColor)
         }
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.fragmentContainer, detailFragment)
-            ?.addToBackStack(null)
-            ?.commit()
     }
+
     private fun getAnimals(): List<Animal> {
         return animals
     }
