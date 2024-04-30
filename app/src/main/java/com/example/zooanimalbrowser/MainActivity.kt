@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         val homeButton: Button = findViewById(R.id.homeButton)
         homeButton.setOnClickListener {
             if (!returnHome()) {
-                // If not in stack, replace with a new instance
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, AnimalListFragment())
                     .commit()

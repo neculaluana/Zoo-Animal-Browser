@@ -40,7 +40,6 @@ class AnimalListFragment : Fragment(), OnItemClickListener {
         Animal("Platypus", "Australia"),
         Animal("Emu", "Australia"),
         Animal("Kookaburra", "Australia"),
-        Animal("Quokka", "Australia"),
         Animal("Panda", "Asia"),
         Animal("Tiger", "Asia"),
         Animal("Orangutan", "Asia"),
