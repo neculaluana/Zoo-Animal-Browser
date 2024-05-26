@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -70,6 +71,7 @@ class AnimalListFragment : Fragment(), OnItemClickListener {
         val app = activity?.application as? ZooApplication
         app?.let {
             DeleteAnimalTask(it) {
+                showAlert("Success", "Animal deleted successfully.")
                 updateAnimalList()
             }.execute(animal)
         }
@@ -77,5 +79,15 @@ class AnimalListFragment : Fragment(), OnItemClickListener {
 
     fun updateAnimalList() {
         loadAnimals()
+    }
+
+    private fun showAlert(title: String, message: String) {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+        }
     }
 }

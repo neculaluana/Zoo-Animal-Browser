@@ -3,7 +3,7 @@ package com.example.zooanimalbrowser
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.zooanimalbrowser.data.models.AnimalDBModel
 import com.example.zooanimalbrowser.data.tasks.InsertAnimalTask
@@ -40,20 +40,25 @@ class MainActivity : AppCompatActivity() {
             val continentName = continent.text.toString().trim()
 
             if (name.isEmpty()) {
-                Toast.makeText(this, "The Animal Name field cannot be empty.", Toast.LENGTH_SHORT).show()
+                showAlert("Validation Error", "The Animal Name field cannot be empty.")
                 return@setOnClickListener
             }
             if (continentName.isEmpty()) {
-                Toast.makeText(this, "The Continent field cannot be empty.", Toast.LENGTH_SHORT).show()
+                showAlert("Validation Error", "The Continent field cannot be empty.")
                 return@setOnClickListener
             }
             if (!isValidContinent(continentName)) {
-                Toast.makeText(this, "Invalid Continent.", Toast.LENGTH_SHORT).show()
+                showAlert("Validation Error", "Invalid Continent.")
                 return@setOnClickListener
             }
 
             val app = application as ZooApplication
-            InsertAnimalTask(app) {
+            InsertAnimalTask(app) { isUpdated ->
+                if (isUpdated) {
+                    showAlert("Duplicate avoided", "Animal continent was updated successfully.")
+                } else {
+                    showAlert("Success", "Animal added successfully.")
+                }
                 (supportFragmentManager.findFragmentById(R.id.fragmentContainer) as? AnimalListFragment)?.updateAnimalList()
             }.execute(AnimalDBModel(name = name, continent = continentName))
         }
@@ -73,5 +78,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return false
+    }
+
+    private fun showAlert(title: String, message: String) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 }
