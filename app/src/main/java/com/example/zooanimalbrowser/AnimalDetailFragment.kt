@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.zooanimalbrowser.models.Animal
+import com.example.zooanimalbrowser.data.models.AnimalDBModel
 
 class AnimalDetailFragment : Fragment() {
 
@@ -41,7 +41,7 @@ class AnimalDetailFragment : Fragment() {
         continentTextView.setTextColor(textColor)
     }
 
-    fun updateContent(animal: Animal, bgColor: Int, textColor: Int) {
+    fun updateContent(animal: AnimalDBModel, bgColor: Int, textColor: Int) {
         arguments = Bundle().apply {
             putString("name", animal.name)
             putString("continent", animal.continent)

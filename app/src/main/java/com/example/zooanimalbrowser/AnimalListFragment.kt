@@ -4,76 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zooanimalbrowser.adapters.AnimalAdapter
 import com.example.zooanimalbrowser.adapters.AnimalAdapter.OnItemClickListener
-import com.example.zooanimalbrowser.models.Animal
+import com.example.zooanimalbrowser.data.models.AnimalDBModel
+import com.example.zooanimalbrowser.data.tasks.DeleteAnimalTask
+import com.example.zooanimalbrowser.data.tasks.GetAllAnimalsTask
 
 class AnimalListFragment : Fragment(), OnItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
-    private val animals: MutableList<Animal> = mutableListOf(
-        Animal("Tanuki", "Asia"),
-        Animal("Koala", "Australia"),
-        Animal("Lion", "Africa"),
-        Animal("Brown Bear", "Europe"),
-        Animal("Sloth", "South America"),
-        Animal("Emperor Penguin", "Antarctica"),
-        Animal("Puma", "North America"),
-        Animal("Elephant", "Africa"),
-        Animal("Rhinoceros", "Africa"),
-        Animal("Zebra", "Africa"),
-        Animal("Giraffe", "Africa"),
-        Animal("Cheetah", "Africa"),
-        Animal("Leopard", "Africa"),
-        Animal("Hippopotamus", "Africa"),
-        Animal("Chimpanzee", "Africa"),
-        Animal("Gorilla", "Africa"),
-        Animal("Kangaroo", "Australia"),
-        Animal("Echidna", "Australia"),
-        Animal("Wombat", "Australia"),
-        Animal("Dingo", "Australia"),
-        Animal("Tasmanian Devil", "Australia"),
-        Animal("Platypus", "Australia"),
-        Animal("Emu", "Australia"),
-        Animal("Kookaburra", "Australia"),
-        Animal("Panda", "Asia"),
-        Animal("Tiger", "Asia"),
-        Animal("Orangutan", "Asia"),
-        Animal("Gibbon", "Asia"),
-        Animal("Komodo Dragon", "Asia"),
-        Animal("Grizzly Bear", "North America"),
-        Animal("Moose", "North America"),
-        Animal("Bald Eagle", "North America"),
-        Animal("Raccoon", "North America"),
-        Animal("Beaver", "North America"),
-        Animal("Bison", "North America"),
-        Animal("Coyote", "North America"),
-        Animal("Jaguar", "South America"),
-        Animal("Capybara", "South America"),
-        Animal("Anaconda", "South America"),
-        Animal("Llama", "South America"),
-        Animal("Alpaca", "South America"),
-        Animal("Macaw", "South America"),
-        Animal("Toucan", "South America"),
-        Animal("Piranha", "South America"),
-        Animal("Adelie Penguin", "Antarctica"),
-        Animal("Weddell Seal", "Antarctica"),
-        Animal("Leopard Seal", "Antarctica"),
-        Animal("Orca", "Antarctica"),
-        Animal("Albatross", "Antarctica"),
-        Animal("Red Fox", "Europe"),
-        Animal("Wild Boar", "Europe"),
-        Animal("European Roe Deer", "Europe"),
-        Animal("Wolf", "Europe"),
-        Animal("Golden Eagle", "Europe"),
-        Animal("Red Panda", "Asia"),
-        Animal("Gaur", "Asia")
-    )
-
+    private val animals: MutableList<AnimalDBModel> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,11 +26,25 @@ class AnimalListFragment : Fragment(), OnItemClickListener {
 
         recyclerView = view.findViewById(R.id.animalList)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = AnimalAdapter(getAnimals(),this)
+        recyclerView.adapter = AnimalAdapter(animals, this)
+
+        loadAnimals()
 
         return view
     }
-    override fun onItemClick(animal: Animal, bgColor: Int, textColor: Int) {
+
+    private fun loadAnimals() {
+        val app = activity?.application as? ZooApplication
+        app?.let {
+            GetAllAnimalsTask(it) { loadedAnimals ->
+                animals.clear()
+                animals.addAll(loadedAnimals)
+                recyclerView.adapter?.notifyDataSetChanged()
+            }.execute()
+        }
+    }
+
+    override fun onItemClick(animal: AnimalDBModel, bgcolor: Int, textColor: Int) {
         val fragmentManager = activity?.supportFragmentManager
         var detailFragment = fragmentManager?.findFragmentById(R.id.fragmentContainer) as? AnimalDetailFragment
 
@@ -96,7 +53,7 @@ class AnimalListFragment : Fragment(), OnItemClickListener {
                 arguments = Bundle().apply {
                     putString("name", animal.name)
                     putString("continent", animal.continent)
-                    putInt("bgColor", bgColor)
+                    putInt("bgColor", bgcolor)
                     putInt("textColor", textColor)
                 }
             }
@@ -105,11 +62,20 @@ class AnimalListFragment : Fragment(), OnItemClickListener {
                 ?.addToBackStack(null)
                 ?.commit()
         } else {
-            detailFragment.updateContent(animal, bgColor, textColor)
+            detailFragment.updateContent(animal, bgcolor, textColor)
         }
     }
 
-    private fun getAnimals(): List<Animal> {
-        return animals
+    override fun onItemDelete(animal: AnimalDBModel) {
+        val app = activity?.application as? ZooApplication
+        app?.let {
+            DeleteAnimalTask(it) {
+                updateAnimalList()
+            }.execute(animal)
+        }
+    }
+
+    fun updateAnimalList() {
+        loadAnimals()
     }
 }

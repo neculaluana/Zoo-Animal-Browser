@@ -18,21 +18,21 @@
         android:paddingBottom="10dp"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@id/separator"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deleteItem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
 
     <View
         android:id="@+id/separator"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@android:color/black"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/name"
         app:layout_constraintBottom_toTopOf="@id/continent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deleteItem"
         />
 
     <TextView
@@ -44,8 +44,18 @@
         android:paddingBottom="10dp"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deleteItem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/separator"
         />
+    <ImageView
+        android:id="@+id/deleteItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
