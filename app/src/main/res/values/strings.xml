@@ -2,4 +2,6 @@
     <string name="app_name">ZooAnimalBrowser</string>
     <string name="close_btn">X</string>
     <string name="home_btn">Home</string>
+    <string name="animal_name_edittext">Name of an Animal</string>
+    <string name="continent_edittext">Continent</string>
 </resources>

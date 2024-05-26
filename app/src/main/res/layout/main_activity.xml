@@ -19,9 +19,32 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"/>
 
+    <EditText
+        android:id="@+id/nameOfAnAnimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/homeButton"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        android:inputType="textPersonName"
+        android:hint="@string/animal_name_edittext"/>
+
+    <EditText
+        android:id="@+id/continent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nameOfAnAnimal"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:inputType="text"
+        android:layout_marginBottom="10dp"
+
+        android:hint="@string/continent_edittext"/>
+
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/closeAppButton" />
+        android:layout_below="@id/continent" />
 </RelativeLayout>
