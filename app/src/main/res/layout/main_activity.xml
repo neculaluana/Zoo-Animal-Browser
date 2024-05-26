@@ -42,9 +42,21 @@
 
         android:hint="@string/continent_edittext"/>
 
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/continent"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_selector"
+        android:text="@string/add_btn"
+        android:textColor="@drawable/button_text_selector"/>
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/continent" />
+        android:layout_below="@id/addButton" />
 </RelativeLayout>
