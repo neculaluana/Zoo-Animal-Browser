@@ -33,6 +33,7 @@
         app:layout_constraintBottom_toTopOf="@id/continent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/deleteItem"
+        android:layout_marginEnd="10dp"
         />
 
     <TextView
@@ -50,12 +51,12 @@
         />
     <ImageView
         android:id="@+id/deleteItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_delete"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/delete_button_selector"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"/>
+        android:layout_marginStart="20dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
