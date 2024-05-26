@@ -10,7 +10,12 @@ class InsertAnimalTask(
 ) : AsyncTask<AnimalDBModel, Unit, Unit>() {
     override fun doInBackground(vararg params: AnimalDBModel?) {
         params.getOrNull(0)?.let { animal ->
-            app.database.animalDao().insert(animal)
+            val existingAnimal = app.database.animalDao().getAnimalByName(animal.name)
+            if (existingAnimal != null) {
+                app.database.animalDao().updateAnimal(existingAnimal.id, animal.continent)
+            } else {
+                app.database.animalDao().insert(animal)
+            }
         }
     }
 

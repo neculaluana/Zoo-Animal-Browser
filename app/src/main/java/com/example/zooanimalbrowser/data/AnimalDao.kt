@@ -24,4 +24,10 @@ interface AnimalDao {
 
     @Query("SELECT * FROM continents WHERE name = :continentName")
     fun getContinentByName(continentName: String): ContinentDBModel?
+
+    @Query("SELECT * FROM animals WHERE LOWER(name) = LOWER(:name) LIMIT 1")
+    fun getAnimalByName(name: String): AnimalDBModel?
+
+    @Query("UPDATE animals SET continent = :continent WHERE id = :id")
+    fun updateAnimal(id: Int, continent: String)
 }
