@@ -1,6 +1,7 @@
 package com.example.zooanimalbrowser
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -9,6 +10,11 @@ import com.example.zooanimalbrowser.data.models.AnimalDBModel
 import com.example.zooanimalbrowser.data.tasks.InsertAnimalTask
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var nameOfAnAnimal: EditText
+    private lateinit var continent: EditText
+    private lateinit var addButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -31,9 +37,9 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-        val nameOfAnAnimal: EditText = findViewById(R.id.nameOfAnAnimal)
-        val continent: EditText = findViewById(R.id.continent)
-        val addButton: Button = findViewById(R.id.addButton)
+        nameOfAnAnimal = findViewById(R.id.nameOfAnAnimal)
+        continent = findViewById(R.id.continent)
+        addButton = findViewById(R.id.addButton)
 
         addButton.setOnClickListener {
             val name = nameOfAnAnimal.text.toString().trim()
@@ -62,6 +68,13 @@ class MainActivity : AppCompatActivity() {
                 (supportFragmentManager.findFragmentById(R.id.fragmentContainer) as? AnimalListFragment)?.updateAnimalList()
             }.execute(AnimalDBModel(name = name, continent = continentName))
         }
+    }
+
+    fun showInputFields(visible: Boolean) {
+        val visibility = if (visible) View.VISIBLE else View.GONE
+        nameOfAnAnimal.visibility = visibility
+        continent.visibility = visibility
+        addButton.visibility = visibility
     }
 
     private fun isValidContinent(continent: String): Boolean {

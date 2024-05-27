@@ -20,6 +20,8 @@ class AnimalDetailFragment : Fragment() {
         val view = inflater.inflate(R.layout.animal_detail_fragment, container, false)
         nameTextView = view.findViewById(R.id.name)
         continentTextView = view.findViewById(R.id.continent)
+        view.setBackgroundResource(R.drawable.gradient_background)
+        (activity as? MainActivity)?.showInputFields(false)
         return view
     }
 
@@ -45,4 +47,9 @@ class AnimalDetailFragment : Fragment() {
 
         updateContentFromArguments()
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as? MainActivity)?.showInputFields(true)
+    }
+
 }
