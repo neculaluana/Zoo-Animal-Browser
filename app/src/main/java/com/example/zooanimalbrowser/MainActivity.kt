@@ -2,6 +2,7 @@ package com.example.zooanimalbrowser
 
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             if (!isValidContinent(continentName)) {
-                showAlert("Validation Error", "Invalid Continent.")
+                showAlert("Validation Error", "Invalid Continent. Choose from \"Europe\", \"Africa\", \"Asia\", \"North America\", \"South America\", \"Australia\" and \"Antarctica\".")
                 return@setOnClickListener
             }
 
@@ -66,10 +67,18 @@ class MainActivity : AppCompatActivity() {
                     showAlert("Success", "Animal added successfully.")
                 }
                 (supportFragmentManager.findFragmentById(R.id.fragmentContainer) as? AnimalListFragment)?.updateAnimalList()
+                clearFieldsAndHideKeyboard()
             }.execute(AnimalDBModel(name = name, continent = continentName))
         }
     }
-
+    private fun clearFieldsAndHideKeyboard() {
+        nameOfAnAnimal.text.clear()
+        continent.text.clear()
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        nameOfAnAnimal.clearFocus()
+        continent.clearFocus()
+    }
     fun showInputFields(visible: Boolean) {
         val visibility = if (visible) View.VISIBLE else View.GONE
         nameOfAnAnimal.visibility = visibility
