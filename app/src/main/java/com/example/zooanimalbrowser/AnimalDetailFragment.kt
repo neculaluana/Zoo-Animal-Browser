@@ -31,22 +31,16 @@ class AnimalDetailFragment : Fragment() {
     private fun updateContentFromArguments() {
         val name = arguments?.getString("name") ?: "N/A"
         val continent = arguments?.getString("continent") ?: "N/A"
-        val bgColor = arguments?.getInt("bgColor") ?: android.R.color.transparent
-        val textColor = arguments?.getInt("textColor") ?: android.R.color.black
 
         nameTextView.text = name
         continentTextView.text = continent
-        view?.setBackgroundColor(bgColor)
-        nameTextView.setTextColor(textColor)
-        continentTextView.setTextColor(textColor)
+        view?.setBackgroundResource(R.drawable.gradient_background)
     }
 
-    fun updateContent(animal: AnimalDBModel, bgColor: Int, textColor: Int) {
+    fun updateContent(animal: AnimalDBModel) {
         arguments = Bundle().apply {
             putString("name", animal.name)
             putString("continent", animal.continent)
-            putInt("bgColor", bgColor)
-            putInt("textColor", textColor)
         }
 
         updateContentFromArguments()

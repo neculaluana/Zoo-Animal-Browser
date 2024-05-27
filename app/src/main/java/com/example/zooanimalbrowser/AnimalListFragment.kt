@@ -45,7 +45,7 @@ class AnimalListFragment : Fragment(), OnItemClickListener {
         }
     }
 
-    override fun onItemClick(animal: AnimalDBModel, bgcolor: Int, textColor: Int) {
+    override fun onItemClick(animal: AnimalDBModel) {
         val fragmentManager = activity?.supportFragmentManager
         var detailFragment = fragmentManager?.findFragmentById(R.id.fragmentContainer) as? AnimalDetailFragment
 
@@ -54,8 +54,6 @@ class AnimalListFragment : Fragment(), OnItemClickListener {
                 arguments = Bundle().apply {
                     putString("name", animal.name)
                     putString("continent", animal.continent)
-                    putInt("bgColor", bgcolor)
-                    putInt("textColor", textColor)
                 }
             }
             fragmentManager?.beginTransaction()
@@ -63,7 +61,7 @@ class AnimalListFragment : Fragment(), OnItemClickListener {
                 ?.addToBackStack(null)
                 ?.commit()
         } else {
-            detailFragment.updateContent(animal, bgcolor, textColor)
+            detailFragment.updateContent(animal)
         }
     }
 
